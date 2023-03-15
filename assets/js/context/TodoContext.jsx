@@ -21,7 +21,11 @@ export default function TodoContextProvider({children}){
     ]);
 
     //Create
-    const createTodo = (val)=>setTodo([...todos, val]);
+    function createTodo(e, todo){
+        e.preventDefault();
+        console.log('CreatTod Ran')
+        setTodo([...todos, todo]);
+    };
 
 
     //Read
