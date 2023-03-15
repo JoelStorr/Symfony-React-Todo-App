@@ -9,15 +9,12 @@ export const TodoContext = createContext();
 export default function TodoContextProvider({children}){
 
     const [todos, setTodo] = useState([
-        {name: 'do something'},
-        {name: 'do something'},
-        {name: 'do something'},
-        {name: 'do something'},
-        {name: 'do something'},
-        {name: 'do something'},
-        {name: 'do something'},
-        {name: 'do something'},
-        {name: 'do something'},
+        {id: 1, name: 'do something'},
+        {id: 2, name: 'do something'},
+        {id: 3, name: 'do something'},
+        {id: 4, name: 'do something'},
+        {id: 5, name: 'do something'},
+        
     ]);
 
     //Create
@@ -33,7 +30,13 @@ export default function TodoContextProvider({children}){
 
 
     //Update
-    const upadteTodo = ()=>{}
+    function updateTodo(data){
+       let tempTodos = [...todos];
+       let todo = tempTodos.find(todo => todo.id === data.id);
+       todo.name = data.name;
+
+       setTodo([...tempTodos]);
+    }
 
 
     //Delete
@@ -46,7 +49,7 @@ export default function TodoContextProvider({children}){
             todos, 
             createTodo,
             readTodo,
-            upadteTodo,
+            updateTodo,
             deleteTdo
         }} >
             { children }
