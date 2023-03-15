@@ -8,7 +8,17 @@ export const TodoContext = createContext();
 
 export default function TodoContextProvider({children}){
 
-    const [todos, setTodo] = useState([{task: 'do something'}]);
+    const [todos, setTodo] = useState([
+        {name: 'do something'},
+        {name: 'do something'},
+        {name: 'do something'},
+        {name: 'do something'},
+        {name: 'do something'},
+        {name: 'do something'},
+        {name: 'do something'},
+        {name: 'do something'},
+        {name: 'do something'},
+    ]);
 
     //Create
     const createTodo = (val)=>setTodo([...todos, val]);
