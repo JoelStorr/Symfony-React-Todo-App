@@ -19,8 +19,11 @@ export default function TodoContextProvider({children}){
     //Create
     function createTodo(e, todo){
         e.preventDefault();
-        console.log('CreatTod Ran')
-        setTodo([...todos, todo]);
+       axios.post('/api/todo/create', todo)
+        .then(response => {
+            console.log(response.data)
+            setTodo([...todos, response.data.todo]);
+        }).catch(e=>console.error(e))
     };
 
 
@@ -40,11 +43,19 @@ export default function TodoContextProvider({children}){
 
     //Update
     function updateTodo(data){
-       let tempTodos = [...todos];
-       let todo = tempTodos.find(todo => todo.id === data.id);
-       todo.name = data.name;
+      axios.put('/api/todo/update/' + data.id, data)
+        .then(res => {
+            let tempTodos = [...todos];
+            let todo = todos.find( todo => {
+                return todo.id === data.id;
+            });
+            
+            todo.name = data.name;
 
-       setTodo([...tempTodos]);
+            setTodo(tempTodos);
+        }).catch(error => {
+            console.error(error);
+        })
     }
 
 
