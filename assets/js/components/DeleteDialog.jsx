@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { TodoContext } from '../context/TodoContext';
 
- function DeleteDialog({ open, setDeletConfirmationIsShown }) {
+ function DeleteDialog({ open, setDeletConfirmationIsShown, todo }) {
 
     const context = useContext(TodoContext);
 
@@ -14,7 +14,7 @@ import { TodoContext } from '../context/TodoContext';
        <DialogTitle>
          Are you shure that you want to delete this to-do?
        </DialogTitle>
-       <DialogContent>//task</DialogContent>
+       <DialogContent>{todo.name}</DialogContent>
        <DialogActions>
          <Button onClick={hide}>Cancle</Button>
          <Button onClick={()=>{context.deleteTodo({id: 0, name:''})}}>Delete</Button>
@@ -26,6 +26,10 @@ import { TodoContext } from '../context/TodoContext';
 DeleteDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     setDeletConfirmationIsShown: PropTypes.func.isRequired,
+    todo: PropTypes.object.shape = ({
+        id: PropTypes.number,
+        name: PropTypes.string,
+    })
 }
 
 export default DeleteDialog;
