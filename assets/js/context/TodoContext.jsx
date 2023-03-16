@@ -1,5 +1,6 @@
 
-import React, {createContext, useState} from 'react';
+import React, {createContext, useState, useEffect} from 'react';
+import axios from 'axios';
 
 
 export const TodoContext = createContext();
@@ -8,14 +9,12 @@ export const TodoContext = createContext();
 
 export default function TodoContextProvider({children}){
 
-    const [todos, setTodo] = useState([
-        {id: 1, name: 'do something'},
-        {id: 2, name: 'do something'},
-        {id: 3, name: 'do something'},
-        {id: 4, name: 'do something'},
-        {id: 5, name: 'do something'},
-        
-    ]);
+    const [todos, setTodo] = useState([]);
+
+
+    useEffect(()=>{
+        readTodos();
+    },[])
 
     //Create
     function createTodo(e, todo){
@@ -26,7 +25,17 @@ export default function TodoContextProvider({children}){
 
 
     //Read
-    const readTodo = ()=>{};
+    function readTodos(){
+        axios.get('/api/todo/read')
+            .then(response =>{
+                setTodo(response.data)
+
+                console.log(response.data);
+            }).catch(e=>{console.error(e)})
+    }
+
+
+   
 
 
     //Update
@@ -56,7 +65,7 @@ export default function TodoContextProvider({children}){
         <TodoContext.Provider value={{
             todos, 
             createTodo,
-            readTodo,
+            readTodos,
             updateTodo,
             deleteTodo
         }} >

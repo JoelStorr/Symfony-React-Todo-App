@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\TodoRepository;
-use Doctrine\ORM\EntityManager;
+
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,7 @@ class TodoController extends AbstractController
         private $entityManager;
         private $todoRepository;
 
-        public function __construct(EntityManager $entityManager, TodoRepository $todoRepository)
+        public function __construct(EntityManagerInterface $entityManager, TodoRepository $todoRepository)
         {
             $this->entityManager = $entityManager;
             $this->todoRepository = $todoRepository;
