@@ -9,6 +9,8 @@ import { TodoContext } from '../context/TodoContext';
 
     const hide = ()=>{setDeletConfirmationIsShown(false);}
 
+    
+
    return (
      <Dialog onClose={hide} fullWidth={true} maxWidth="sm" open={open}>
        <DialogTitle>
@@ -17,7 +19,10 @@ import { TodoContext } from '../context/TodoContext';
        <DialogContent>{todo.name}</DialogContent>
        <DialogActions>
          <Button onClick={hide}>Cancle</Button>
-         <Button onClick={()=>{context.deleteTodo({id: 0, name:''})}}>Delete</Button>
+         <Button onClick={()=>{
+            context.deleteTodo({id: todo.id, name: todo.name})
+            hide();    
+        }}>Delete</Button>
        </DialogActions>
      </Dialog>
    );
@@ -26,10 +31,7 @@ import { TodoContext } from '../context/TodoContext';
 DeleteDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     setDeletConfirmationIsShown: PropTypes.func.isRequired,
-    todo: PropTypes.object.shape = ({
-        id: PropTypes.number,
-        name: PropTypes.string,
-    })
+    todo: PropTypes.object,
 }
 
 export default DeleteDialog;

@@ -40,7 +40,15 @@ export default function TodoContextProvider({children}){
 
 
     //Delete
-    const deleteTdo = ()=>{}
+   function deleteTodo(data){
+        
+        let tempTodos = [...todos];
+        let todo = tempTodos.find((todo)=>{return todo.id === data.id})
+        tempTodos.splice(tempTodos.indexOf(todo), 1);
+
+        setTodo(tempTodos);
+
+    }
     
 
 
@@ -50,7 +58,7 @@ export default function TodoContextProvider({children}){
             createTodo,
             readTodo,
             updateTodo,
-            deleteTdo
+            deleteTodo
         }} >
             { children }
         </TodoContext.Provider>
