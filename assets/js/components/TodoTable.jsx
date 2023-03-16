@@ -13,8 +13,12 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddIcon from "@mui/icons-material/Add";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
-import React, { useContext, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
+
+//NOTE: My Imports
 import { TodoContext } from "../context/TodoContext";
+import DeleteDialog from "./DeleteDialog";
+
 
 export default function TodoTable() {
   const context = useContext(TodoContext);
@@ -22,8 +26,11 @@ export default function TodoTable() {
 
   const [eidtIsShown, setEditIsShown] = useState(false)
   const [editTodo, setEditTodo] = useState('');
+  const [deleteConfirmationIsShown, setDeleteConfirmationIsShown] = useState(false)
 
   return (
+    <Fragment>
+
     <form
       onSubmit={(e) => {
         context.createTodo(e, { name: addTodo });
@@ -100,7 +107,7 @@ export default function TodoTable() {
                     <EditIcon />
                   </IconButton>
 
-                  <IconButton>
+                  <IconButton onClick={()=>{setDeleteConfirmationIsShown(true)}}>
                     <DeleteForeverIcon />
                   </IconButton>
                 </TableCell>
@@ -109,5 +116,11 @@ export default function TodoTable() {
         </TableBody>
       </Table>
     </form>
+        
+      <DeleteDialog open={deleteConfirmationIsShown, setDeleteConfirmationIsShown} />
+
+
+
+    </Fragment>
   );
 }
