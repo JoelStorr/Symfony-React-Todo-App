@@ -62,12 +62,19 @@ export default function TodoContextProvider({children}){
     //Delete
    function deleteTodo(data){
         
-        let tempTodos = [...todos];
-        let todo = tempTodos.find((todo)=>{return todo.id === data.id})
-        tempTodos.splice(tempTodos.indexOf(todo), 1);
+        axios.delete('/api/todo/delete/' + data.id,  )
+            .then((res)=>{
+                       let tempTodos = [...todos];
+                       let todo = tempTodos.find((todo) => {
+                         return todo.id === data.id;
+                       });
+                       tempTodos.splice(tempTodos.indexOf(todo), 1);
 
-        setTodo(tempTodos);
+                       setTodo(tempTodos);
 
+            }).catch((e)=>{
+                console.error(e);
+            })
     }
     
 

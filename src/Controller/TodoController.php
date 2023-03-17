@@ -64,7 +64,7 @@ class TodoController extends AbstractController
         
     }
 
-    // TODO: Need to See why based on Route ID Symfony knows what post to take
+    // NOTE: Symfony will match the id to a todo->id
     #[Route('/update/{id}', name: 'api_todo_update', methods:'PUT')]
     public function udpate(Request $request, Todo $todo){
         
@@ -84,10 +84,18 @@ class TodoController extends AbstractController
 
 
     #[Route('/delete/{id}', name: 'api_todo_delete', methods:'DELETE')]
-    public function delete(Request $request){
+    public function delete(Todo $todo){
 
+        try{
+            $this->entityManager->remove($todo);
+            $this->entityManager->flush();
+        }catch(Exception $e){
+            //error
+        }
        
-        
+        return $this->json([
+            'message' => 'todo has been deleted',
+        ]);
     }
         
 
