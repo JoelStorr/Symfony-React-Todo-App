@@ -19,9 +19,6 @@ function checkLevel(level){
 export default function AppSnackBar() {
   const context = useContext(TodoContext);
 
-   
-
-
   return (
     <Snackbar autoHideDuration={6000} open={context.message.text !== undefined}>
       {context.message.text && (
