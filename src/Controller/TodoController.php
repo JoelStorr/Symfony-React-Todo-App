@@ -92,6 +92,7 @@ class TodoController extends AbstractController
         }
 
         return $this->json([
+            'todo' => $todo->toArray(),
             'message' => [
                 'text' => ['Todo has been updated'],
                 'level' => 'success'
@@ -119,6 +120,7 @@ class TodoController extends AbstractController
         }
 
         return $this->json([
+            'todo' => $todo->toArray(),
             'message' => [
                 'text' => ['Todo has been Deleted'],
                 'level' => 'success'
