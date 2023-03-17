@@ -23,12 +23,12 @@ import DeleteDialog from "./DeleteDialog";
 
 export default function TodoTable() {
   const context = useContext(TodoContext);
-  const [addTodoName, setAddTodoName] = useState('');
+  const [addTodotask, setAddTodotask] = useState('');
   const [addTodoDescription, setAddTodoDescription] = useState('');
 
   const [eidtIsShown, setEditIsShown] = useState(false);
 
-  const [editTodoName, setEditTodoName] = useState('');
+  const [editTodotask, setEditTodotask] = useState('');
   const [editTodoDescription, setEditTodoDescription] = useState("");
  
 
@@ -40,8 +40,8 @@ export default function TodoTable() {
 
   function onCreateSubmit(event){
     event.preventDefault();
-    context.createTodo(event, { name: addTodoName, description: addTodoDescription })
-    setAddTodoName('');
+    context.createTodo(event, { task: addTodotask, description: addTodoDescription })
+    setAddTodotask('');
     setAddTodoDescription('');
   }
 
@@ -49,7 +49,7 @@ export default function TodoTable() {
      event.preventDefault();
        context.updateTodo({
          id: todoId,
-         name: editTodoName,
+         task: editTodotask,
          description: editTodoDescription,
        });
        setEditIsShown(false);
@@ -72,16 +72,16 @@ export default function TodoTable() {
         {/* Body */}
         <TableBody>
           {/* Add */}
-          {/* Name */}
+          {/* task */}
           <TableRow>
             <TableCell>
               <form onSubmit={onCreateSubmit}>
                 <TextField
                   fullWidth={true}
                   label="New Task"
-                  value={addTodoName}
+                  value={addTodotask}
                   onChange={(e) => {
-                    setAddTodoName(e.target.value);
+                    setAddTodotask(e.target.value);
                   }}
                 />
               </form>
@@ -114,7 +114,7 @@ export default function TodoTable() {
             .reverse()
             .map((todo, index) => (
               <TableRow key={"todo" + index}>
-                {/* Name */}
+                {/* task */}
                 <TableCell>
                   {eidtIsShown === todo.id ? (
                     <form onSubmit={onEditSubmit.bind(this, todo.id)}>
@@ -122,12 +122,12 @@ export default function TodoTable() {
                         type="text"
                         fullWidth={true}
                         autoFocus={true}
-                        value={editTodoName}
-                        onChange={(e) => setEditTodoName(e.target.value)}
+                        value={editTodotask}
+                        onChange={(e) => setEditTodotask(e.target.value)}
                       />
                     </form>
                   ) : (
-                    <Typography>{todo.name}</Typography>
+                    <Typography>{todo.task}</Typography>
                   )}
                 </TableCell>
 
@@ -164,7 +164,7 @@ export default function TodoTable() {
                      <IconButton
                     onClick={() => {
                       setEditIsShown(todo.id);
-                      setEditTodoName(todo.name);
+                      setEditTodotask(todo.task);
                       setEditTodoDescription(todo.description);
                     }}
                   >

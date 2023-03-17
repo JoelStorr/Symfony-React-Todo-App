@@ -16,11 +16,11 @@ import { TodoContext } from '../context/TodoContext';
        <DialogTitle>
          Are you shure that you want to delete this to-do?
        </DialogTitle>
-       <DialogContent>{todo.name}</DialogContent>
+       <DialogContent>{todo.task}</DialogContent>
        <DialogActions>
          <Button onClick={hide}>Cancle</Button>
          <Button onClick={()=>{
-            context.deleteTodo({id: todo.id, name: todo.name})
+            context.deleteTodo({id: todo.id, task: todo.task})
             hide();    
         }}>Delete</Button>
        </DialogActions>
@@ -33,7 +33,7 @@ DeleteDialog.propTypes = {
     setDeletConfirmationIsShown: PropTypes.func.isRequired,
     todo: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      task: PropTypes.string.isRequired,
     }),
 }
 

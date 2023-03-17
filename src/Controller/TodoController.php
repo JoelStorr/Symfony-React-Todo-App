@@ -48,7 +48,7 @@ class TodoController extends AbstractController
         $content = json_decode($request->getContent());
 
         $todo = new Todo();
-        $todo->setName($content->name);
+        $todo->setTask($content->task);
         $todo->setDescription($content->description);
 
         try{
@@ -67,7 +67,7 @@ class TodoController extends AbstractController
 
         return $this->json([
             'todo' => $todo->toArray(),
-            'message' => ['text' => ['Todo has bin Created', 'Task: ' . $content->name], 'level' => 'success']
+            'message' => ['text' => ['Todo has bin Created', 'Task: ' . $content->task], 'level' => 'success']
         ]);
         
     }
@@ -79,7 +79,7 @@ class TodoController extends AbstractController
         $content = json_decode($request->getContent());
       
         if(
-            $todo->getName() === $content->name 
+            $todo->getTask() === $content->task 
             && $todo->getDescription() === $content->description
         ){
             return $this->json([
@@ -92,7 +92,7 @@ class TodoController extends AbstractController
 
 
 
-        $todo->setName($content->name);
+        $todo->setTask($content->task);
         $todo->setDescription($content->description);
 
         try{

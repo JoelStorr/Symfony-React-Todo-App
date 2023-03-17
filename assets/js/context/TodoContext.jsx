@@ -61,7 +61,7 @@ export default function TodoContextProvider({children}){
                     return todo.id === data.id;
                 });
 
-                todo.name = res.data.todo.name;
+                todo.task = res.data.todo.task;
                 todo.description = res.data.todo.description;
                
         
