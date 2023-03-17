@@ -29,13 +29,25 @@ export default function TodoTable() {
   const [deleteConfirmationIsShown, setDeleteConfirmationIsShown] = useState(false);
   const [todoToBeDeleted ,setTodoToBeDeleted] = useState(null);
 
+  function onCreateSubmit(event){
+    event.preventDefault();
+    context.createTodo(event, { name: addTodo })
+    setAddTodo('');
+  }
+
+  function onEditSubmit(todoId, event){
+     event.preventDefault();
+       context.updateTodo({
+         id: todoId,
+         name: editTodo,
+       });
+       setEditIsShown(false);
+  }
+
+
+
   return (
     <Fragment>
-      <form
-        onSubmit={(e) => {
-          context.createTodo(e, { name: addTodo });
-        }}
-      >
         <Table>
           <TableHead>
             <TableRow>
@@ -46,6 +58,7 @@ export default function TodoTable() {
           <TableBody>
             <TableRow>
               <TableCell>
+              <form onSubmit={onCreateSubmit}>
                 <TextField
                   fullWidth={true}
                   label="New Task"
@@ -54,9 +67,10 @@ export default function TodoTable() {
                     setAddTodo(e.target.value);
                   }}
                 />
+              </form>
               </TableCell>
               <TableCell align="right">
-                <IconButton type="submit">
+                <IconButton type="submit" onClick={onCreateSubmit}>
                   <AddIcon />
                 </IconButton>
               </TableCell>
@@ -68,8 +82,12 @@ export default function TodoTable() {
                 <TableRow key={"todo" + index}>
                   <TableCell>
                     {eidtIsShown === todo.id ? (
+                      <form onSubmit={onEditSubmit.bind(this, todo.id)}>
+
                       <TextField
+                        type="text"
                         fullWidth={true}
+                        autoFocus={true}
                         value={editTodo}
                         onChange={(e) => setEditTodo(e.target.value)}
                         InputProps={{
@@ -78,21 +96,14 @@ export default function TodoTable() {
                               <IconButton onClick={() => setEditIsShown(false)}>
                                 <CloseIcon />
                               </IconButton>
-                              <IconButton
-                                onClick={() => {
-                                  context.updateTodo({
-                                    id: todo.id,
-                                    name: editTodo,
-                                  });
-                                  setEditIsShown(false);
-                                }}
-                              >
+                              <IconButton type="submit">
                                 <DoneIcon />
                               </IconButton>
                             </>
                           ),
                         }}
                       />
+                      </form>
                     ) : (
                       todo.name
                     )}
@@ -120,7 +131,7 @@ export default function TodoTable() {
               ))}
           </TableBody>
         </Table>
-      </form>
+
 
 
       {deleteConfirmationIsShown && (
