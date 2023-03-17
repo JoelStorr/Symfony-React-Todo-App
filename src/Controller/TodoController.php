@@ -82,10 +82,22 @@ class TodoController extends AbstractController
         try{
             $this->entityManager->flush();
         }catch(Exception $e){
-            //error
+            return $this->json([
+                'message' => [
+                    'text' => ['Could not Update Todo on the Database'],
+                    'level' => 'error'
+                ]
+            ]);
+
         }
 
-        return $this->json(['message' => 'todo has been updated']);
+        return $this->json([
+            'message' => [
+                'text' => ['Todo has been updated'],
+                'level' => 'success'
+            ]
+        ]);
+
         
     }
 
@@ -97,12 +109,22 @@ class TodoController extends AbstractController
             $this->entityManager->remove($todo);
             $this->entityManager->flush();
         }catch(Exception $e){
-            //error
+            return $this->json([
+                'message' => [
+                    'text' => ['Could not Delete Todo from the Database'],
+                    'level' => 'error'
+                ]
+            ]);
+
         }
-       
+
         return $this->json([
-            'message' => 'todo has been deleted',
+            'message' => [
+                'text' => ['Todo has been Deleted'],
+                'level' => 'success'
+            ]
         ]);
+
     }
         
 
