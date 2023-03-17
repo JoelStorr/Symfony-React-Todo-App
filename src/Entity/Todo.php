@@ -36,10 +36,6 @@ class Todo
         return $this;
     }
     
-    public function toArray(){
-        return ['id'=> $this->id, 'name'=>$this->name];
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -50,5 +46,10 @@ class Todo
         $this->description = $description;
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        return ['id' => $this->id, 'name' => $this->name, 'description' => $this->description];
     }
 }
