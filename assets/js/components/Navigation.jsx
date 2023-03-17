@@ -28,7 +28,7 @@ export default function Navigation() {
 
 
     //functions
-    function toggleDraw(){
+    function toggleDrawer(){
         setDrawerOpen(!drawerOpen);
     }
 
@@ -41,7 +41,7 @@ export default function Navigation() {
   return (
     <AppBar position="fixed" style={{backgroundColor: 'lightgray'}}>
         <Toolbar>
-           <IconButton edge="start">
+           <IconButton edge="start" onClick={toggleDrawer}>
             <MenuIcon />
            </IconButton>     
             <Box style={{flexGrow: 1}}/>
@@ -49,6 +49,16 @@ export default function Navigation() {
             <Box style={{flexGrow: 1}}/>
             <Button size="large" > Login </Button>
         </Toolbar>
+        <Drawer   variant="temporary" onClose={toggleDrawer} open={drawerOpen}>
+            <List style={{width: '200px'}}>
+                {drawerItems.map((prop)=>(
+                    <ListItem button key={prop.text} onClick={toggleDrawer}>
+                        <ListItemIcon>{prop.icon}</ListItemIcon>
+                        <ListItemText>{prop.text}</ListItemText>
+                    </ListItem>
+                ))}
+            </List>
+        </Drawer>
     </AppBar>
   );
 }
