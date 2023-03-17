@@ -51,14 +51,22 @@ export default function TodoContextProvider({children}){
     function updateTodo(data){
       axios.put('/api/todo/update/' + data.id, data)
         .then(res => {
-            let tempTodos = [...todos];
-            let todo = todos.find( todo => {
-                return todo.id === data.id;
-            });
-            
-            todo.name = data.name;
 
-            setTodo(tempTodos);
+            if(res.data.message.level === 'error'){
+                setMessage(res.data.message)
+            }else{
+
+                let tempTodos = [...todos];
+                let todo = todos.find( todo => {
+                    return todo.id === data.id;
+                });
+
+                todo.name = data.name;
+        
+                setTodo(tempTodos);
+                setMessage(res.data.message);
+            }
+            
         }).catch(error => {
             console.error(error);
         })
@@ -70,6 +78,11 @@ export default function TodoContextProvider({children}){
         
         axios.delete('/api/todo/delete/' + data.id,  )
             .then((res)=>{
+
+                if(res.data.message.level === 'error'){
+                    setMessage(res.data.message)
+                }else{
+
                        let tempTodos = [...todos];
                        let todo = tempTodos.find((todo) => {
                          return todo.id === data.id;
@@ -77,6 +90,8 @@ export default function TodoContextProvider({children}){
                        tempTodos.splice(tempTodos.indexOf(todo), 1);
 
                        setTodo(tempTodos);
+                       setMessage(res.data.message);
+                }
 
             }).catch((e)=>{
                 console.error(e);
