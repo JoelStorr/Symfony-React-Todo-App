@@ -10,6 +10,7 @@ export const TodoContext = createContext();
 export default function TodoContextProvider({children}){
 
     const [todos, setTodo] = useState([]);
+    const [message, setMessage] = useState({})
 
 
     useEffect(()=>{
@@ -22,7 +23,12 @@ export default function TodoContextProvider({children}){
        axios.post('/api/todo/create', todo)
         .then(response => {
             console.log(response.data)
-            setTodo([...todos, response.data.todo]);
+            if(response.data.message.level === 'success'){
+                setTodo([...todos, response.data.todo]);
+                setMessage(response.data.message);
+            }else{
+                setMessage(response.data.message);
+            }
         }).catch(e=>console.error(e))
     };
 
@@ -81,11 +87,13 @@ export default function TodoContextProvider({children}){
 
     return(
         <TodoContext.Provider value={{
-            todos, 
+            todos,
+            message, 
             createTodo,
             readTodos,
             updateTodo,
-            deleteTodo
+            deleteTodo,
+            setMessage
         }} >
             { children }
         </TodoContext.Provider>

@@ -53,14 +53,21 @@ class TodoController extends AbstractController
         try{
             $this->entityManager->persist($todo);
             $this->entityManager->flush();
-            return $this->json([
-                'todo' =>$todo->toArray()
-            ]);
         }catch(Exception $e){
 
-           //Error
+            return $this->json([
+                'message' => [
+                    'text' => ['Could not Submit Todo to the Database'],
+                    'level' => 'error'
+                ]
+            ]);
 
         }
+
+        return $this->json([
+            'todo' => $todo->toArray(),
+            'message' => ['text' => ['Todo has bin Created', 'Task: ' . $content->name], 'level' => 'success']
+        ]);
         
     }
 
