@@ -6,8 +6,7 @@ import {
   TableBody,
   IconButton,
   TextField,
-  InputAdornment,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -19,6 +18,10 @@ import React, { Fragment, useContext, useState } from "react";
 //NOTE: My Imports
 import { TodoContext } from "../context/TodoContext";
 import DeleteDialog from "./DeleteDialog";
+
+
+
+
 
 
 export default function TodoTable() {
@@ -65,6 +68,7 @@ export default function TodoTable() {
         <TableHead>
           <TableRow >
             <TableCell>Task</TableCell>
+            <TableCell>Description</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -161,25 +165,24 @@ export default function TodoTable() {
                     </Fragment>
                   ) : (
                     <Fragment>
-                     <IconButton
-                    onClick={() => {
-                      setEditIsShown(todo.id);
-                      setEditTodotask(todo.task);
-                      setEditTodoDescription(todo.description);
-                    }}
-                  >
-                    <EditIcon />
-                  </IconButton>
+                      <IconButton
+                        onClick={() => {
+                          setEditIsShown(todo.id);
+                          setEditTodotask(todo.task);
+                          setEditTodoDescription(todo.description);
+                        }}
+                      >
+                        <EditIcon />
+                      </IconButton>
 
-                  <IconButton
-                    onClick={() => {
-                      setDeleteConfirmationIsShown(true);
-                      setTodoToBeDeleted(todo);
-                    }}
-                  >
-                    <DeleteForeverIcon />
-                  </IconButton>
-
+                      <IconButton
+                        onClick={() => {
+                          setDeleteConfirmationIsShown(true);
+                          setTodoToBeDeleted(todo);
+                        }}
+                      >
+                        <DeleteForeverIcon />
+                      </IconButton>
                     </Fragment>
                   )}
                 </TableCell>
