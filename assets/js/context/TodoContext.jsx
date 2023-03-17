@@ -22,7 +22,7 @@ export default function TodoContextProvider({children}){
         e.preventDefault();
        axios.post('/api/todo/create', todo)
         .then(response => {
-            console.log(response.data)
+            //console.log(response.data)
             if(response.data.message.level === 'success'){
                 setTodo([...todos, response.data.todo]);
                 setMessage(response.data.message);
@@ -51,7 +51,7 @@ export default function TodoContextProvider({children}){
     function updateTodo(data){
       axios.put('/api/todo/update/' + data.id, data)
         .then(res => {
-
+            console.log(res.data);
             if(res.data.message.level === 'error'){
                 setMessage(res.data.message)
             }else{

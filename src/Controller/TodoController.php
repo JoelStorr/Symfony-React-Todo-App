@@ -5,6 +5,7 @@ namespace App\Controller;
 use Exception;
 
 use App\Entity\Todo;
+use App\Form\TodoType;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +48,24 @@ class TodoController extends AbstractController
 
         $content = json_decode($request->getContent());
 
+
+        $form = $this->createForm(TodoType::class);
+        $form->submit((array)$content);
+
+        if(!$form->isValid()){
+            $errors = [];
+            foreach($form->getErrors(true, true) as $error){
+                $propertyName = $error->getOrigin()->getName();
+                $errors[$propertyName] = $error->getMessage();
+            }
+
+            return $this->json([
+                'message' => ['text' => implode("\n", $errors), 'level'=>'error']
+            ]);
+        }
+
+
+
         $todo = new Todo();
         $todo->setTask($content->task);
         $todo->setDescription($content->description);
@@ -77,6 +96,27 @@ class TodoController extends AbstractController
     public function udpate(Request $request, Todo $todo){
         
         $content = json_decode($request->getContent());
+
+
+
+        $form = $this->createForm(TodoType::class);
+        /* Need to do this cause we can't send the ID to the form type */
+        $nonObject = (array)$content;
+        unset($nonObject['id']);
+        $form->submit($nonObject);
+
+        if (!$form->isValid()) {
+            $errors = [];
+            foreach ($form->getErrors(true, true) as $error) {
+                $propertyName = $error->getOrigin()->getName();
+                $errors[$propertyName] = $error->getMessage();
+            }
+
+            return $this->json([
+                'message' => ['text' => implode("\n", $errors), 'level' => 'error']
+            ]);
+        }
+
       
         if(
             $todo->getTask() === $content->task 
@@ -106,6 +146,8 @@ class TodoController extends AbstractController
             ]);
 
         }
+
+    
 
         return $this->json([
             'todo' => $todo->toArray(),
