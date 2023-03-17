@@ -63,7 +63,7 @@ export default function TodoTable() {
       <Table>
         {/* Head */}
         <TableHead>
-          <TableRow>
+          <TableRow >
             <TableCell>Task</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
