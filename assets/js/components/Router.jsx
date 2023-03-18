@@ -45,7 +45,7 @@ export default function Router() {
           <Route path="/" element={<Navigate replace to="/todo-list" />} />
           <Route path="/todo-list" element={<TodoList />} />
           <Route path="/tag-list" element={<TagList />} />
-          <Route element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>
